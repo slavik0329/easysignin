@@ -1,13 +1,11 @@
 // Copyright 2018 Steve Dakh
 
 const ethers = require('ethers');
-const Web3 = require("web3");
-const web3 = new Web3();
 
 function verifySignature(signature, message) {
   // Add standard ETH message to signature
   const splitSignature = ethers.utils.splitSignature(signature);
-  splitSignature.messageHash = web3.utils.sha3("\x19Ethereum Signed Message:\n" + message.length + message);
+  splitSignature.messageHash = ethers.utils.keccak256("\x19Ethereum Signed Message:\n" + message.length + message);
 
   // Subtract network from v to properly verify
   if (splitSignature.v >= 27) {

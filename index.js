@@ -5,7 +5,7 @@ const ethers = require('ethers');
 function verifySignature(signature, message) {
   // Add standard ETH message to signature
   const splitSignature = ethers.utils.splitSignature(signature);
-  splitSignature.messageHash = ethers.utils.keccak256("\x19Ethereum Signed Message:\n" + message.length + message);
+  splitSignature.messageHash = ethers.utils.id("\x19Ethereum Signed Message:\n" + message.length + message);
 
   // Subtract network from v to properly verify
   if (splitSignature.v >= 27) {
